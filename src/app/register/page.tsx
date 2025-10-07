@@ -1,11 +1,31 @@
-import React from 'react'
+"use client";
+import React, { useState } from 'react'
+import { Input } from "@/components/ui/input"
 
-const page = () => {
+interface RegistrationFormData {
+    name : string;
+    userName :string;
+    email:string;
+    password:string;
+    confirmPassword:string;
+    role:'applicant' | 'employer';
+}
+const Registration: React.FC= () => {
+    const [formData,setForData] = useState<RegistrationFormData>({
+        name :'',
+        userName: '',
+        email : '',
+        password:'',
+        confirmPassword:'',
+        role:'applicant',
+    })
   return (
     <div>
-        <h1>Hello TS</h1>
+        <form>
+         <div>{<Input type="email" placeholder="Email" />}</div>
+        </form>
     </div>
   )
 }
 
-export default page
+export default Registration
