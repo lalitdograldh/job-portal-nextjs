@@ -53,7 +53,7 @@ const handleSubmit = (e: FormEvent) => {
     } catch (error) {}
   };
   return (
-    <div className='min-h-screen bg-background flex items-center justify-center p-4'>
+    <div className='min-h-screen flex items-center justify-center p-4 bg-[linear-gradient(to_right,#ee7724,#d8363a,#dd3675,#b44593)]'>
         <Card className="w-full max-w-md">
             <CardHeader className="text-center">
                 <div className="mx-auto w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-4">
