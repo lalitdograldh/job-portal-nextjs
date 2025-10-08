@@ -47,7 +47,7 @@ const handleInputChange = (name:string,value:string) =>{
 
     }));
 };
-console.log(formData);
+//console.log(formData);
 const handleSubmit = (e: FormEvent) => {
     try {
     } catch (error) {}
