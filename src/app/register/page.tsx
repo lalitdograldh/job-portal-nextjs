@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button";
@@ -38,6 +38,20 @@ const Registration: React.FC= () => {
         confirmPassword:'',
         role:'applicant',
     })
+const [showPassword, setShowPassword] = useState(false);
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+const handleInputChange = (name:string,value:string) =>{
+    setForData((prev) => ({
+        ...prev,
+        [name]:value,
+
+    }));
+};
+console.log(formData);
+const handleSubmit = (e: FormEvent) => {
+    try {
+    } catch (error) {}
+  };
   return (
     <div className='min-h-screen bg-background flex items-center justify-center p-4'>
         <Card className="w-full max-w-md">
@@ -49,7 +63,7 @@ const Registration: React.FC= () => {
                  <CardDescription>Create your account to get started</CardDescription>
             </CardHeader>
             <CardContent>
-                <form className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-2">
                         <Label htmlFor="name">Full Name *</Label>
                         <div className="relative">
@@ -58,6 +72,11 @@ const Registration: React.FC= () => {
                             id="name" 
                             type="text" 
                             placeholder="Enter your full name" 
+                            required
+                            value={formData.name}
+                            onChange={(e:ChangeEvent<HTMLInputElement>)=>
+                                handleInputChange("name",e.target.value)
+                            }
                             className={`pl-10 `}/>
                         </div>
                     </div>
@@ -70,6 +89,10 @@ const Registration: React.FC= () => {
                             type="text"
                             placeholder="Choose a username"
                             required
+                            value={formData.userName}
+                            onChange={(e:ChangeEvent<HTMLInputElement>)=>
+                                handleInputChange("userName",e.target.value)
+                            }
                             className={`pl-10 `}/>
                         </div>
                     </div>
@@ -82,12 +105,20 @@ const Registration: React.FC= () => {
                             type="email"
                             placeholder="Enter your email"
                             required
+                            value={formData.email}
+                            onChange={(e:ChangeEvent<HTMLInputElement>)=>
+                                handleInputChange("email",e.target.value)
+                            }
                             className={`pl-10 `}/>
                         </div>
                     </div>
                     <div className="space-y-2 w-full">
                         <Label htmlFor="role">I am a *</Label>  
-                        <Select>
+                        <Select
+                            value={formData.role}
+                            onValueChange={(value:"applicant" | "employer")=>
+                                handleInputChange("role", value)
+                            }>
                            <SelectTrigger className="w-full">
                                 <SelectValue placeholder="Select your role" />
                             </SelectTrigger>
@@ -103,10 +134,27 @@ const Registration: React.FC= () => {
                             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                             <Input
                             id="password"
-                            type="text"
+                            type={showPassword ? "text" : "password"}
                             placeholder="Create a strong password"
                             required
+                            value={formData.password}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                    handleInputChange("password", e.target.value)
+                            }
                             className={`pl-10 pr-10 `}/>
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                                onClick={() => setShowPassword(!showPassword)}
+                             >
+                                {showPassword ? (
+                                    <EyeOff className="w-4 h-4 text-muted-foreground" />
+                                ) : (
+                                    <Eye className="w-4 h-4 text-muted-foreground" />
+                                )}
+                            </Button>
                         </div>
                     </div>
                     <div className="space-y-2">
@@ -115,10 +163,27 @@ const Registration: React.FC= () => {
                             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                             <Input
                             id="confirmPassword"
-                            type="text"
+                            type={showConfirmPassword ? "text":"password"}
                             placeholder="Confirm your password"
                             required
+                            value={formData.confirmPassword}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                    handleInputChange("confirmPassword", e.target.value)
+                            }
                             className={`pl-10 pr-10 `}/>
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                >
+                                {showConfirmPassword ? (
+                                    <EyeOff className="w-4 h-4 text-muted-foreground" />
+                                ) : (
+                                    <Eye className="w-4 h-4 text-muted-foreground" />
+                                )}
+                            </Button>
                         </div>
                     </div>
                     <Button type="submit" className="w-full">
