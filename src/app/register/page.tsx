@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Eye, EyeOff, Lock, Mail, User, UserCheck } from "lucide-react";
+import { registrationAction } from '../register/registrationAction.action';
 interface RegistrationFormData {
     name : string;
     userName :string;
@@ -48,10 +49,10 @@ const handleInputChange = (name:string,value:string) =>{
     }));
 };
 //console.log(formData);
-const handleSubmit = (e: FormEvent) => {
-    try {
-    } catch (error) {}
-  };
+// const handleSubmit = (e: FormEvent) => {
+//     try {
+//     } catch (error) {}
+// };
   return (
     <div className='min-h-screen flex items-center justify-center p-4 bg-[linear-gradient(to_right,#ee7724,#d8363a,#dd3675,#b44593)]'>
         <Card className="w-full max-w-md">
@@ -63,13 +64,14 @@ const handleSubmit = (e: FormEvent) => {
                  <CardDescription>Create your account to get started</CardDescription>
             </CardHeader>
             <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form action={ registrationAction } className="space-y-6">
                     <div className="space-y-2">
                         <Label htmlFor="name">Full Name *</Label>
                         <div className="relative">
                             <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                             <Input 
                             id="name" 
+                            name="name" 
                             type="text" 
                             placeholder="Enter your full name" 
                             required
@@ -87,6 +89,7 @@ const handleSubmit = (e: FormEvent) => {
                             <Input
                             id="userName"
                             type="text"
+                            name='userName'
                             placeholder="Choose a username"
                             required
                             value={formData.userName}
@@ -103,6 +106,7 @@ const handleSubmit = (e: FormEvent) => {
                             <Input
                             id="email"
                             type="email"
+                            name="email"
                             placeholder="Enter your email"
                             required
                             value={formData.email}
@@ -115,6 +119,7 @@ const handleSubmit = (e: FormEvent) => {
                     <div className="space-y-2 w-full">
                         <Label htmlFor="role">I am a *</Label>  
                         <Select
+                            name='role'
                             value={formData.role}
                             onValueChange={(value:"applicant" | "employer")=>
                                 handleInputChange("role", value)
@@ -134,6 +139,7 @@ const handleSubmit = (e: FormEvent) => {
                             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                             <Input
                             id="password"
+                            name='password'
                             type={showPassword ? "text" : "password"}
                             placeholder="Create a strong password"
                             required
@@ -163,6 +169,7 @@ const handleSubmit = (e: FormEvent) => {
                             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                             <Input
                             id="confirmPassword"
+                            name="confirmPassword"
                             type={showConfirmPassword ? "text":"password"}
                             placeholder="Confirm your password"
                             required
