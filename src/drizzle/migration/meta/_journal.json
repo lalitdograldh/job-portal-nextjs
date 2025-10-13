@@ -15,6 +15,13 @@
       "when": 1760093267853,
       "tag": "0001_cynical_magdalene",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1760362343189,
+      "tag": "0002_rich_gorilla_man",
+      "breakpoints": true
     }
   ]
 }
