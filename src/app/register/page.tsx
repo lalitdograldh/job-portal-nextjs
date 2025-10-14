@@ -49,10 +49,19 @@ const handleInputChange = (name:string,value:string) =>{
     }));
 };
 //console.log(formData);
-// const handleSubmit = (e: FormEvent) => {
-//     try {
-//     } catch (error) {}
-// };
+const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const registrationData =  {
+        name : formData.name.trim(),
+        userName :formData.userName.trim(),
+        email:formData.email.toLowerCase().trim(),
+        password:formData.password,
+        role:formData.role,
+    }
+    if(formData.password !== formData.confirmPassword) 
+        return alert("Password are not matching!");
+    await registrationAction(registrationData);
+};
   return (
     <div className='min-h-screen flex items-center justify-center p-4 bg-[linear-gradient(to_right,#ee7724,#d8363a,#dd3675,#b44593)]'>
         <Card className="w-full max-w-md">
@@ -64,7 +73,7 @@ const handleInputChange = (name:string,value:string) =>{
                  <CardDescription>Create your account to get started</CardDescription>
             </CardHeader>
             <CardContent>
-                <form action={ registrationAction } className="space-y-6">
+                <form onSubmit={ handleSubmit } className="space-y-6">
                     <div className="space-y-2">
                         <Label htmlFor="name">Full Name *</Label>
                         <div className="relative">
