@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select"
 import { Eye, EyeOff, Lock, Mail, User, UserCheck } from "lucide-react";
 import { registrationAction } from '../register/registrationAction.action';
+import { toast } from 'sonner';
 interface RegistrationFormData {
     name : string;
     userName :string;
@@ -59,8 +60,10 @@ const handleSubmit = async (e: FormEvent) => {
         role:formData.role,
     }
     if(formData.password !== formData.confirmPassword) 
-        return alert("Password are not matching!");
-    await registrationAction(registrationData);
+        return toast.error("Password are not matching!");
+    const result = await registrationAction(registrationData);
+    if(result.status ==="SUCCESS") toast.success(result.message);
+    else toast.error(result.message);
 };
   return (
     <div className='min-h-screen flex items-center justify-center p-4 bg-[linear-gradient(to_right,#ee7724,#d8363a,#dd3675,#b44593)]'>
