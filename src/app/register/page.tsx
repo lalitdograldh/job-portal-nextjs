@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Eye, EyeOff, Lock, Mail, User, UserCheck } from "lucide-react";
-import { registrationAction } from '../register/auth.actions';
+import { registrationAction } from '../../features/auth/server/auth.actions';
 import { toast } from 'sonner';
 interface RegistrationFormData {
     name : string;
