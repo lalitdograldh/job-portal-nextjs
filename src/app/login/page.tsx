@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/card"
 
 import { Eye, EyeOff,  Mail,  UserCheck } from "lucide-react";
+import { loginUserAction } from '@/features/auth/server/auth.actions';
+import { toast } from 'sonner';
 interface LoginFormData {
     email:string;
     password:string;
@@ -33,8 +35,16 @@ const handleInputChange = (name:string,value:string) =>{
     }));
 };
 //console.log(formData);
-const handleSubmit = (e: FormEvent) => {
+const handleSubmit = async(e: FormEvent) => {
+    e.preventDefault();
     try {
+        const loginData =  {
+            email:formData.email.toLowerCase().trim(),
+            password:formData.password,
+        }
+       const result = await loginUserAction(loginData);
+        if(result.status ==="SUCCESS") toast.success(result.message);
+        else toast.error(result.message);
     } catch (error) {}
   };
   return (
