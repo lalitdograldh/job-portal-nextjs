@@ -6,7 +6,7 @@ import argon2 from "argon2";
 import { eq, or } from "drizzle-orm";
 import { LoginUserData, loginUserSchema, RegisterUserData, registerUserSchema } from "../auth.schema";
 
-export const registrationAction = async (data: RegisterUserData) =>{
+export const registerUserAction = async (data: RegisterUserData) =>{
     try{
         const {data:validateData, error} = registerUserSchema.safeParse(data);
         if(error) return { status:"ERROR", message:error.issues[0].message };
