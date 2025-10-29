@@ -21,7 +21,9 @@ export const registerUserAction = async (data: RegisterUserData) =>{
                 return{ status:"ERROR", message:"UserName Already Exists" };
         }
         const hashPassword = await argon2.hash(password);
-        await db.insert(users).values({name, userName,email,password:hashPassword,role });
+        const [result] = await db.insert(users).values({name, userName,email,password:hashPassword,role });
+        console.log(result);
+        await createSessionAndSetCookies(result.insertId);
         return{
             status:"SUCCESS",
             message:"Registration Completed Successfully",
