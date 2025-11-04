@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1759921078313,
-      "tag": "0000_ambiguous_blob",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1760093267853,
-      "tag": "0001_cynical_magdalene",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1760362549967,
-      "tag": "0002_complete_shiver_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1760440195272,
-      "tag": "0003_big_mac_gargan",
+      "when": 1762275923864,
+      "tag": "0000_opposite_the_professor",
       "breakpoints": true
     }
   ]

@@ -1,1 +1,0 @@
-ALTER TABLE `users` ADD `role` enum('admin','applicant','employer') DEFAULT 'applicant';
