@@ -5,8 +5,11 @@ import { users } from "@/drizzle/schema";
 import argon2 from "argon2";
 import { eq, or } from "drizzle-orm";
 import { LoginUserData, loginUserSchema, RegisterUserData, registerUserSchema } from "../auth.schema";
-import { createSessionAndSetCookies } from "./use-cases/sessions";
-
+import { createSessionAndSetCookies, invalidateSession } from "./use-cases/sessions";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import crypto from "crypto";
+//import { getCurrentUser } from "./auth.queries";
 export const registerUserAction = async (data: RegisterUserData) =>{
     try{
         const {data:validateData, error} = registerUserSchema.safeParse(data);
@@ -63,4 +66,15 @@ export const loginUserAction = async (data :LoginUserData) =>{
             message: "Unknown Error Occurred! Please Try Again Later",
         };
     }
+}
+
+export const logoutUserAction = async() =>{  
+  const cookieStore = await cookies();
+  const session = cookieStore.get("session")?.value; 
+  if(!session) return redirect("/login");  
+  const hashedToken = crypto.createHash("sha-256").update(session).digest("hex");
+
+  await invalidateSession(hashedToken);
+  cookieStore.delete("session");
+  return redirect("/login");
 }
