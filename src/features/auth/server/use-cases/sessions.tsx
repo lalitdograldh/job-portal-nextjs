@@ -14,15 +14,16 @@ type CreateSessionData = {
     ip:string,
     userId:number,
     token:string,
+    tx?:DbClient
 }
 const generateSessionToken = () => {
     return crypto.randomBytes(32).toString("hex").normalize();
 }
 const createUserSession = async({
-    token,userId,userAgent,ip,
+    token,userId,userAgent,ip,tx=db,
 }:CreateSessionData) =>{
     const hashedToken = crypto.createHash("sha-256").update(token).digest("hex");
-    const [session] = await db.insert(sessions).values({
+    const [session] = await tx.insert(sessions).values({
         id:hashedToken,
         userId,
         expiresAt: new Date(Date.now() + SESSION_LIFETIME * 1000),
@@ -31,7 +32,8 @@ const createUserSession = async({
     });
     return session;
 }
-export const createSessionAndSetCookies = async(userId:number) =>{
+type DbClient = typeof db | Parameters<Parameters<typeof db.transaction>[0]>[0];
+export const createSessionAndSetCookies = async(userId:number,tx:DbClient =db) =>{
     const token = generateSessionToken();
     const ip = await getIPAddress();
     const headersList = await headers();
@@ -40,6 +42,7 @@ export const createSessionAndSetCookies = async(userId:number) =>{
         userId:userId,
         userAgent: headersList.get("user-agent") || "",
         ip:ip,
+        tx,
     });
     const cookieStore = await cookies();
     cookieStore.set("session",token,{
