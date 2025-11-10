@@ -19,25 +19,28 @@ import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginUserData, loginUserSchema } from '@/features/auth/auth.schema';
-
+import { useRouter } from 'next/navigation';
 const LoginForm: React.FC= () => {
-const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(loginUserSchema),
-  });
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm({
+        resolver: zodResolver(loginUserSchema),
+    });
+const router  = useRouter();
 const [showPassword, setShowPassword] = useState(false);
 
 //console.log(formData);
 const onSubmit = async(data: LoginUserData) => {
-    try {
-       const result = await loginUserAction(data);
-       if(result.status ==="SUCCESS") toast.success(result.message);
-       else toast.error(result.message);
-    } catch (error) {}
+    const result = await loginUserAction(data);
+    if(result.status ==="SUCCESS"){
+        if(result.role === "employer") router.push("/employer-dashboard");
+        else router.push("/applicant-dashboard");
+    }
+    if(result.status ==="SUCCESS") toast.success(result.message);
+    else toast.error(result.message);
   };
   return (
     <div className='min-h-screen flex items-center justify-center p-4 bg-[linear-gradient(to_right,#ee7724,#d8363a,#dd3675,#b44593)]'>
