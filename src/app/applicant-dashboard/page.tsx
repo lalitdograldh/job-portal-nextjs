@@ -1,8 +1,10 @@
-import React from 'react'
-
+import { logoutUserAction } from '@/features/auth/server/auth.actions'
 const ApplicantDashboard = () => {
   return (
-    <h1>ApplicantDashboard</h1>
+    <div>
+      <h1>ApplicantDashboard</h1>
+      <button onClick={logoutUserAction}>Logout</button>
+    </div>
   )
 }
 
