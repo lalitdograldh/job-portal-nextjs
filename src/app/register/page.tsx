@@ -47,7 +47,7 @@ const onSubmit = async (data:RegisterUserWithConfirmData) => {
     const result = await registerUserAction(data);
     if(result.status ==="SUCCESS"){
         if(data.role === "employer") router.push("/employer-dashboard");
-        else router.push("/applicant-dashboard");
+        else router.push("/dashboard");
     }
     if(result.status ==="SUCCESS") toast.success(result.message);
     else toast.error(result.message);
