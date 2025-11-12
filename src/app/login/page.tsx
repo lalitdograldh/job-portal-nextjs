@@ -37,7 +37,7 @@ const onSubmit = async(data: LoginUserData) => {
     const result = await loginUserAction(data);
     if(result.status ==="SUCCESS"){
         if(result.role === "employer") router.push("/employer-dashboard");
-        else router.push("/applicant-dashboard");
+        else router.push("/dashboard");
     }
     if(result.status ==="SUCCESS") toast.success(result.message);
     else toast.error(result.message);

@@ -11,6 +11,6 @@ export default async function DashboardLayout({
     
     if (!user) return redirect('/login');
 
-    if (user.role !== "employer") return redirect('/applicant-dashboard');
+    if (user.role !== "employer") return redirect('/dashboard');
   return <>{children}</> ;
 }
