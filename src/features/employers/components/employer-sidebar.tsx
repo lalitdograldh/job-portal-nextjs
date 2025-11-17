@@ -26,7 +26,7 @@ const EmployerSidebar = () => {
             {navigationItem.map((curNav) => {
                 const Icon = curNav.icon;
                 return(
-                    <Link className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors" key={curNav.name} href={curNav.href || "#"}>
+                    <Link className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors hover:text-foreground hover:bg-accent rounded-lg transition-colors w-full" key={curNav.name} href={curNav.href || "#"}>
                             <Icon/>
                             {curNav.name}
                         </Link>    
@@ -37,7 +37,7 @@ const EmployerSidebar = () => {
         <div className="absolute bottom-6 left-3 right-3">
             <button 
                 onClick={logoutUserAction} 
-                className="flex items-center gap-3 px-3 py-2 text-sm font-medium hover:text-foreground hover:bg-accent rounded-lg transition-colors w-full">
+                className="flex items-center gap-3 px-3 py-2 text-sm font-medium hover:text-foreground hover:bg-accent rounded-lg transition-colors w-full text-destructive">
                 <LogOut className="h-4 w-4"/>
                 Log-out
             </button>
