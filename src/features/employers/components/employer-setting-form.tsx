@@ -6,30 +6,25 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { updateEmployerProfileAction } from '@/features/server/employers.action';
-import { Briefcase, Building2, Calendar, FileText, Globe, MapPin } from 'lucide-react';
+import { Briefcase, Building2, Calendar, FileText, Globe, Loader, MapPin } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner';
 import { EmployerProfileData, employerProfileSchema, organizationTypes, teamSizes } from '../employers.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-// const organizationTypeOptions = ["development","business","design"] as const;
-// type OrganizationType = (typeof organizationTypeOptions)[number];
-
-// const teamSizeOptions = ["just me","2-10 employees","11-50 employees"] as const;
-// type TeamSize = (typeof teamSizeOptions)[number];
-
-// interface IFormInput {
-//   name: string
-//   description:string
-//   yearOfEstablisment:string
-//   location:string
-//   websiteUrl:string
-//   organizationType:OrganizationType
-//   teamSize:TeamSize
-// }
-
-const EmployerSettingsForm = () => {
-    const { register, handleSubmit , control , formState: { errors }, } = useForm<EmployerProfileData>({
+const EmployerSettingsForm = ({initialData }  : {
+    initialData?:Partial<EmployerProfileData>
+}) => {
+    const { register, handleSubmit , control , formState: { errors, isDirty, isSubmitting }, } = useForm<EmployerProfileData>({
+        defaultValues:{
+            name:initialData?.name || "",
+            description:initialData?.description || "",
+            organizationType:initialData?.organizationType,
+            teamSize:initialData?.teamSize,
+            yearOfEstablisment:initialData?.yearOfEstablisment,
+            websiteUrl:initialData?.websiteUrl || "",
+            location:initialData?.location || "",
+        },
         resolver:zodResolver(employerProfileSchema),
     });
     const handleFormSubmit = async (data:EmployerProfileData) =>{
@@ -167,7 +162,15 @@ const EmployerSettingsForm = () => {
                     </div>
                     {errors.websiteUrl && <p className='text-sm text-destructive'>{ errors.websiteUrl.message}</p>}
                 </div>
-                <Button type='submit'>Save Changes</Button>
+                <div className='flex items-center gap-4 pt-4'>
+                    <Button type='submit'>
+                        {isSubmitting && <Loader className='w-4 h-4 animate-spin'/>}
+                        {isSubmitting ? "Saving Changes..." : "Save Changes"}
+                    </Button>
+                    {!isDirty && (
+                        <p className='text-sm'>No changes to save</p>
+                    )}
+                </div>
             </form>
 
         </CardContent>
