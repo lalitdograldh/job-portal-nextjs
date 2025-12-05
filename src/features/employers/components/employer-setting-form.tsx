@@ -11,6 +11,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner';
 import { EmployerProfileData, employerProfileSchema, organizationTypes, teamSizes } from '../employers.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Tiptap from '@/components/text-editor';
 
 const EmployerSettingsForm = ({initialData }  : {
     initialData?:Partial<EmployerProfileData>
@@ -58,7 +59,7 @@ const EmployerSettingsForm = ({initialData }  : {
                     </div>
                     {errors.name && <p className='text-sm text-destructive'>{ errors.name.message}</p>}
                 </div>
-                <div className='space-y-2'>
+                {/* <div className='space-y-2'>
                     <Label htmlFor='description'>Description *</Label>
                     <div className='relative'>
                         <FileText className='absolute left-3 top-3 w-4 h-4 text-muted-foreground'/>
@@ -70,6 +71,24 @@ const EmployerSettingsForm = ({initialData }  : {
                         />
                     </div>
                     {errors.description && <p className='text-sm text-destructive'>{ errors.description.message}</p>}
+                </div> */}
+                <div className="space-y-2">
+                    <Controller
+                        name="description"
+                        control={control}
+                        render={({ field, fieldState }) => (
+                            <div className="space-y-2">
+                            <Label>Description *</Label>
+                            <Tiptap content={field.value} onChange={field.onChange} />
+
+                            {fieldState.error && (
+                                <p className="text-sm text-destructive">
+                                {fieldState.error.message}
+                                </p>
+                            )}
+                            </div>
+                        )}
+                    />
                 </div>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                     <div className='space-y-2'>
