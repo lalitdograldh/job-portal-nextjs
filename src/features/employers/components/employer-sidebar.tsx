@@ -28,13 +28,15 @@ const EmployerSidebar = () => {
         base?:string;
     }){
         const normalizedHref = href.replace(/\/$/,"") || "/";
-        const pattern = new URLPattern({
-            pathname:normalizedHref === base ? base : `${normalizedHref}{/*}?`,
-        });
+        if (normalizedHref === base) return pathname === base;
+            return pathname.startsWith(normalizedHref) || pathname === normalizedHref;
+        // const pattern = new URLPattern({
+        //     pathname:normalizedHref === base ? base : `${normalizedHref}{/*}?`,
+        // });
 
         // console.log("pattern:",pattern);
         // console.log("inside:",pattern.test({ pathname}));
-        return pattern.test({pathname});
+        //return pattern.test({pathname});
     }
   return (
     <div className="w-64 bg-card border-r border-border fixed bottom-0 top-0">
